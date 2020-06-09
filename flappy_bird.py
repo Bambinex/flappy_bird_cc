@@ -10,10 +10,6 @@ WIN_HEIGHT = 700
 
 nom_image = pygame.transform.scale2x(pygame.image.load(os.path.join("/home/philippe/Bureau","bg.png")))
 
-def draw_window(win):
-    win.blit(nom_image, (0,0))
-    pygame.display.update()
-
 nom_tableau = [pygame.transform.scale2x(pygame.image.load(os.path.join("/home/philippe/Bureau", "bird1.png"))),
 pygame.transform.scale2x(pygame.image.load(os.path.join("/home/philippe/Bureau", "bird2.png"))),
 pygame.transform.scale2x(pygame.image.load(os.path.join("/home/philippe/Bureau", "bird3.png")))]
@@ -53,7 +49,7 @@ class Bird:
             if (self.tilt > -90):
                 self.tilt = self.tilt - self.ROT_VEL
     def draw(self,win):
-        img_count += 1
+        img_count = img_count+1
         if (img_count < ANIMATION_TIME):
             img = IMGS[0]
         elif(img_count < ANIMATION_TIME * 2):
@@ -69,15 +65,25 @@ class Bird:
     def get_mask(self):
         return pygame.mask.from_surface(sel.img)
 
-    
+
+def draw_window(win):
+    win.blit(nom_image, (0,0))
+    win.blit(img_count, (0,0))
+    pygame.display.update()
+
+nom_tableau = [pygame.transform.scale2x(pygame.image.load(os.path.join("/home/philippe/Bureau", "bird1.png"))),
+pygame.transform.scale2x(pygame.image.load(os.path.join("/home/philippe/Bureau", "bird2.png"))),
+pygame.transform.scale2x(pygame.image.load(os.path.join("/home/philippe/Bureau", "bird3.png")))]
+
+
 def main():
     run = True
     win = pygame.display.set_mode((WIN_WIDTH,WIN_HEIGHT))
     clock = pygame.time.Clock()
+    draw_window(win)
+    draw_window(Bird)
     while (run):
         clock.tick(30)
-        draw_window(win)
-        draw_window(Bird)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -87,8 +93,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-nom_tableau = [pygame.transform.scale2x(pygame.image.load(os.path.join("/home/philippe/Bureau", "bird1.png"))),
-pygame.transform.scale2x(pygame.image.load(os.path.join("/home/philippe/Bureau", "bird2.png"))),
-pygame.transform.scale2x(pygame.image.load(os.path.join("/home/philippe/Bureau", "bird3.png")))]
 
